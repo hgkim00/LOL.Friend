@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lol_friend/login.dart';
+import 'package:lol_friend/views/login.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

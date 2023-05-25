@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lol_friend/app.dart';
+import 'package:lol_friend/views/app.dart';
+import 'package:provider/provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -10,5 +11,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const App());
+  runApp(MultiProvider(
+    providers: const [],
+    builder: ((context, child) => const App()),
+  ));
 }
