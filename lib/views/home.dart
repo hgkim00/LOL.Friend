@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
+          title: Image.asset('assets/images/appbar.png'),
           actions: [
             IconButton(
               onPressed: () {
@@ -27,9 +28,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
         body: Column(
-          children: const [
-            Text("MAIN"),
-          ],
+          children: const [],
         ),
       ),
     );
