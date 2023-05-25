@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lol_friend/color_schemes.g.dart';
 import 'package:lol_friend/views/login.dart';
 
 class App extends StatelessWidget {
@@ -9,7 +10,14 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'LOL.Friend',
       routes: _routes,
-      theme: ThemeData(),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        scaffoldBackgroundColor: Colors.transparent,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+        ),
+      ),
       home: const LoginPage(),
     );
   }

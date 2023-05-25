@@ -11,8 +11,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MultiProvider(
-    providers: const [],
-    builder: ((context, child) => const App()),
-  ));
+  runApp(
+      // MultiProvider(
+      //   providers: const [],
+      //   builder: ((context, child) => const App()),
+      // )
+      const App());
 }
