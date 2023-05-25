@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lol_friend/color_schemes.g.dart';
+import 'package:lol_friend/views/home.dart';
 import 'package:lol_friend/views/login.dart';
 
 class App extends StatelessWidget {
@@ -18,7 +20,17 @@ class App extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
       ),
-      home: const LoginPage(),
+      home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              return const HomePage();
+            } else {
+              return const LoginPage();
+            }
+          }),
     );
   }
 }

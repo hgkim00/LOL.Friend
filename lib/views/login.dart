@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lol_friend/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AuthService auth = Provider.of<AuthService>(context, listen: false);
     double height = MediaQuery.of(context).size.height;
     return Container(
       decoration: const BoxDecoration(
@@ -31,7 +34,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: height * 0.1),
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: 구글 로그인
+                    auth.signInWithGoogle();
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(10),
