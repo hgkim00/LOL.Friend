@@ -15,19 +15,48 @@ class LoginPage extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(),
-        body: Center(
-          child: Column(
-            children: [
-              Image.asset(
-                'assets/images/title.png',
-                height: height * 0.28,
-                fit: BoxFit.cover,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("구글로 로그인"),
-              ),
-            ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/images/title.png',
+                  height: height * 0.28,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: height * 0.3),
+                const Text('친구들과 경쟁하세요'),
+                const Text('LOL KING이 되어보세요'),
+                SizedBox(height: height * 0.1),
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: 구글 로그인
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(10),
+                    backgroundColor: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset('assets/images/glogo.png'),
+                      const Text(
+                        'Google 로그인',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Opacity(
+                        opacity: 0,
+                        child: Image.asset('assets/images/glogo.png'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
