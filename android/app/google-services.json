@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "364420487289",
+    "project_id": "lol-friend-82980",
+    "storage_bucket": "lol-friend-82980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364420487289:android:440ceaae8b9c1aacfc9ca8",
+        "android_client_info": {
+          "package_name": "com.example.lol_friend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364420487289-pbna6rre6so4ac9175jo92b1hjjj5nkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAhY09aap_bFkMfrqQgN5RGS_GDRPSvzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364420487289-pbna6rre6so4ac9175jo92b1hjjj5nkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
