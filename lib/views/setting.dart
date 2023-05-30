@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lol_friend/services/auth_service.dart';
+import 'package:lol_friend/services/navigation_service.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,8 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthService auth = Provider.of<AuthService>(context);
+    final auth = Provider.of<AuthService>(context);
+    final nav = Provider.of<NavigationService>(context);
 
     return Container(
       decoration: const BoxDecoration(
@@ -24,6 +26,7 @@ class SettingPage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 auth.logout();
+                nav.setIndex(0);
               },
               icon: const Icon(Icons.logout),
             ),

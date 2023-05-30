@@ -63,4 +63,9 @@ class App extends StatelessWidget {
 
 final _routes = <String, WidgetBuilder>{
   '/login': ((BuildContext context) => const LoginPage()),
+  '/home': ((BuildContext context) => const HomePage()),
+  '/community': ((BuildContext context) => const CommunityPage()),
+  '/chat': ((BuildContext context) => const ChatPage()),
+  '/rank': ((BuildContext context) => const RankPage()),
+  '/setting': ((BuildContext context) => const SettingPage()),
 };
