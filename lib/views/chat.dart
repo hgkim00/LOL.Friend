@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
         ),
         body: Column(
           children: const [
-            Text("This is Home Page"),
+            Text("This is Chat Page"),
           ],
         ),
         bottomNavigationBar: const BottomNavigation(),
