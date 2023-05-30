@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lol_friend/services/auth_service.dart';
+import 'package:lol_friend/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,8 +29,11 @@ class HomePage extends StatelessWidget {
           ],
         ),
         body: Column(
-          children: const [],
+          children: const [
+            Text("This is Home Page"),
+          ],
         ),
+        bottomNavigationBar: const BottomNavigation(),
       ),
     );
   }

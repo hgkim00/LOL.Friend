@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lol_friend/services/auth_service.dart';
+import 'package:lol_friend/services/navigation_service.dart';
 import 'package:lol_friend/views/app.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => NavigationService()),
       ],
       builder: ((context, child) => const App()),
     ),
