@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lol_friend/services/auth_service.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    AuthService auth = Provider.of<AuthService>(context);
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -19,14 +16,6 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Image.asset('assets/images/appbar.png'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                auth.logout();
-              },
-              icon: const Icon(Icons.logout),
-            ),
-          ],
         ),
         body: Column(
           children: const [

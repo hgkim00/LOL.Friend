@@ -34,7 +34,7 @@ class BottomNavigation extends StatelessWidget {
         NavigationDestination(
           selectedIcon: Icon(CupertinoIcons.chart_bar_fill),
           icon: Icon(CupertinoIcons.chart_bar),
-          label: 'Ranking',
+          label: 'Rank',
         ),
         NavigationDestination(
           selectedIcon: Icon(CupertinoIcons.gear_alt_fill),
