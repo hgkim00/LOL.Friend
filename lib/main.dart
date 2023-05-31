@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:lol_friend/services/auth_service.dart';
 import 'package:lol_friend/services/navigation_service.dart';
 import 'package:lol_friend/views/app.dart';
@@ -12,7 +13,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await dotenv.load();
   runApp(
     MultiProvider(
       providers: [

@@ -21,7 +21,11 @@ class SettingPage extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset('assets/images/appbar.png'),
+          title: Image.asset(
+            'assets/images/appbar.png',
+            height: 40,
+            fit: BoxFit.fitHeight,
+          ),
           actions: [
             IconButton(
               onPressed: () {
