@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService extends ChangeNotifier {
   final _user = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
 
-  Future<UserCredential> signInWithGoogle() async {
+  Future<User?> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -19,8 +21,37 @@ class AuthService extends ChangeNotifier {
       idToken: googleAuth?.idToken,
     );
 
-    // Once signed in, return the UserCredential
-    return await _user.signInWithCredential(credential);
+    final UserCredential userCredential =
+        await _user.signInWithCredential(credential);
+    final User? user = userCredential.user;
+
+    if (user != null) {
+      print('Google Login Success: $user');
+      await addUserInfo();
+      return user;
+    } else {
+      print('Google Login Fail: No User Found');
+      return null;
+    }
+  }
+
+  Future<bool> doesDocumentExist(String uid) async {
+    final docSnapshot = await _firestore.collection('user').doc(uid).get();
+
+    return docSnapshot.exists;
+  }
+
+  Future<void> addUserInfo() async {
+    bool isDocExist = await doesDocumentExist(_user.currentUser!.uid);
+    if (!isDocExist) {
+      _firestore.collection('user').doc(_user.currentUser!.uid).set({
+        'email': _user.currentUser!.email,
+        'name': _user.currentUser!.displayName,
+        'nick': '',
+        'friend': [],
+        'uid': _user.currentUser!.uid,
+      });
+    }
   }
 
   Future<void> logout() async {

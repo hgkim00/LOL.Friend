@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:lol_friend/API/riot_api.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 
 class HomePage extends StatelessWidget {
@@ -34,6 +33,7 @@ class HomePage extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
                   keyboardType: TextInputType.text,
@@ -41,14 +41,23 @@ class HomePage extends StatelessWidget {
                     prefixIcon: const Icon(CupertinoIcons.search),
                     prefixIconColor: outlineColor,
                     hintText: '소환사 검색',
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2, color: outlineColor)),
-                    border: const OutlineInputBorder(
-                        borderSide: BorderSide(width: 1)),
+                    filled: true,
+                    fillColor: const Color(0xFF1B2023),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                    // focusedBorder: OutlineInputBorder(
+                    //     borderSide: BorderSide(width: 2, color: outlineColor)),
+                    // border: const OutlineInputBorder(
+                    //     borderSide: BorderSide(width: 1)),
                   ),
-                  onFieldSubmitted: (value) async {
-                    String response = await getSummonerInfo(riotApi, value);
+                  onFieldSubmitted: (value) {
+                    Navigator.pushNamed(context, '/search', arguments: value);
                   },
+                ),
+                const SizedBox(height: 30),
+                const Text(
+                  'My Information',
+                  style: TextStyle(fontSize: 20),
                 ),
               ],
             ),

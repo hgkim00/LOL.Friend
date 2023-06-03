@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lol_friend/color_schemes.g.dart';
+import 'package:lol_friend/models/post.dart';
 import 'package:lol_friend/services/navigation_service.dart';
-import 'package:lol_friend/views/chat.dart';
-import 'package:lol_friend/views/home.dart';
-import 'package:lol_friend/views/community.dart';
+import 'package:lol_friend/views/community/add_post.dart';
+import 'package:lol_friend/views/community/detail.dart';
 import 'package:lol_friend/views/login.dart';
-import 'package:lol_friend/views/rank.dart';
-import 'package:lol_friend/views/setting.dart';
+import 'package:lol_friend/views/home/search.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -18,6 +17,19 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'LOL.Friend',
       routes: _routes,
+      onGenerateRoute: (settings) {
+        if (settings.name == '/search') {
+          final String? data = settings.arguments as String?;
+          return MaterialPageRoute(
+              builder: (context) => SearchSummonerPage(data: data ?? "NULL"));
+        }
+        if (settings.name == '/detail') {
+          final Post post = settings.arguments as Post;
+          return MaterialPageRoute(
+              builder: (context) => DetailPage(post: post));
+        }
+        return null;
+      },
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: darkColorScheme,
@@ -25,6 +37,8 @@ class App extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
         ),
+        textTheme:
+            ThemeData.dark().textTheme.apply(fontFamily: 'BeaufortforLOL'),
       ),
       home: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -34,7 +48,8 @@ class App extends StatelessWidget {
             } else if (snapshot.hasData) {
               return Consumer<NavigationService>(
                   builder: (context, navigationService, _) {
-                return getPageByIndex(navigationService.selectedIndex);
+                return navigationService
+                    .getPageByIndex(navigationService.selectedIndex);
               });
             } else {
               return const LoginPage();
@@ -42,30 +57,8 @@ class App extends StatelessWidget {
           }),
     );
   }
-
-  Widget getPageByIndex(int index) {
-    switch (index) {
-      case 0:
-        return const HomePage();
-      case 1:
-        return const CommunityPage();
-      case 2:
-        return const ChatPage();
-      case 3:
-        return const RankPage();
-      case 4:
-        return const SettingPage();
-      default:
-        return const HomePage();
-    }
-  }
 }
 
 final _routes = <String, WidgetBuilder>{
-  '/login': ((BuildContext context) => const LoginPage()),
-  '/home': ((BuildContext context) => const HomePage()),
-  '/community': ((BuildContext context) => const CommunityPage()),
-  '/chat': ((BuildContext context) => const ChatPage()),
-  '/rank': ((BuildContext context) => const RankPage()),
-  '/setting': ((BuildContext context) => const SettingPage()),
+  '/addpost': ((BuildContext context) => const AddPost()),
 };
