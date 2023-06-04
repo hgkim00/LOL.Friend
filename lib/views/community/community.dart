@@ -4,9 +4,14 @@ import 'package:lol_friend/services/community_service.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 
-class CommunityPage extends StatelessWidget {
+class CommunityPage extends StatefulWidget {
   const CommunityPage({super.key});
 
+  @override
+  State<CommunityPage> createState() => _CommunityPageState();
+}
+
+class _CommunityPageState extends State<CommunityPage> {
   @override
   Widget build(BuildContext context) {
     final communityService = Provider.of<CommunityService>(context);
@@ -25,7 +30,7 @@ class CommunityPage extends StatelessWidget {
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            await communityService.getPosts();
+            setState(() {});
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),

@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lol_friend/models/post.dart';
+import 'package:lol_friend/services/community_service.dart';
 
 FToast fToast = FToast();
 
 class LikeService extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
+  final communityService = CommunityService();
 
   final Map<String, Set<String>> _likesData = {};
 
@@ -23,7 +25,6 @@ class LikeService extends ChangeNotifier {
       });
       _showToast(
           "좋아요를 누르셨습니다!", CupertinoIcons.hand_thumbsup_fill, Colors.blue);
-      notifyListeners();
     } else {
       if (_likesData[post.id]!.contains(post.uid)) {
         // User has already liked this item
@@ -33,11 +34,13 @@ class LikeService extends ChangeNotifier {
         _firestore.collection('post').doc(post.id).update({
           'likes': post.likes,
         });
+
         _showToast(
             "좋아요를 누르셨습니다!", CupertinoIcons.hand_thumbsup_fill, Colors.blue);
       }
-      notifyListeners();
     }
+
+    notifyListeners();
   }
 
   void dislikeItem(BuildContext context, Post post) {
@@ -48,9 +51,9 @@ class LikeService extends ChangeNotifier {
       _firestore.collection('post').doc(post.id).update({
         'dislikes': post.dislikes,
       });
+
       _showToast(
           "싫어요를 누르셨습니다!", CupertinoIcons.hand_thumbsdown_fill, Colors.red);
-      notifyListeners();
     } else {
       if (_likesData[post.id]!.contains(post.uid)) {
         // User has already liked this item
@@ -60,11 +63,12 @@ class LikeService extends ChangeNotifier {
         _firestore.collection('post').doc(post.id).update({
           'dislikes': post.dislikes,
         });
+
         _showToast(
             "싫어요를 누르셨습니다!", CupertinoIcons.hand_thumbsdown_fill, Colors.red);
       }
-      notifyListeners();
     }
+    notifyListeners();
   }
 }
 

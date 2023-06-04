@@ -1,37 +1,49 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:lol_friend/models/post.dart';
 import 'package:lol_friend/services/community_service.dart';
 import 'package:lol_friend/views/app.dart';
 import 'package:provider/provider.dart';
 
-class AddPost extends StatefulWidget {
-  const AddPost({super.key});
+class EditPost extends StatefulWidget {
+  const EditPost({Key? key, required this.existPost}) : super(key: key);
+  final Post existPost;
 
   @override
-  State<AddPost> createState() => _AddPostState();
+  State<EditPost> createState() => _EditPostState();
 }
 
-class _AddPostState extends State<AddPost> {
+class _EditPostState extends State<EditPost> {
+  late Post post;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    post = widget.existPost;
+  }
+
   final List<File> _pickedImages = [];
   final picker = ImagePicker();
 
-  final title = TextEditingController();
-  final content = TextEditingController();
+  String content = '';
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     final communityService = Provider.of<CommunityService>(context);
+    List<String> imagesURL = [];
+    final title = TextEditingController(text: post.title);
+    final content = TextEditingController(text: post.content);
 
     Future<void> getImage() async {
       _pickedImages.clear();
-      final picked = await picker.pickMultiImage(
-          imageQuality: 50, maxWidth: 500, maxHeight: 500);
+      final picked = await picker.pickMultiImage();
       if (picked.isNotEmpty) {
         setState(() {
           for (var image in picked) {
@@ -55,9 +67,9 @@ class _AddPostState extends State<AddPost> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                communityService.addPost(
-                    title.text, content.text, _pickedImages);
+              onPressed: () async {
+                await communityService.editPost(post.id, title.text,
+                    content.text, _pickedImages, post.imageNum);
                 Timer(
                     const Duration(seconds: 1),
                     () => Navigator.pushAndRemoveUntil(
@@ -66,7 +78,7 @@ class _AddPostState extends State<AddPost> {
                         (route) => false));
               },
               child: const Text(
-                'POST',
+                'EDIT',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -128,7 +140,7 @@ class _AddPostState extends State<AddPost> {
                         ),
                       ),
                     ),
-                    _pickedImages.isNotEmpty
+                    _pickedImages.isNotEmpty || post.image
                         ? const Padding(
                             padding: EdgeInsets.fromLTRB(8, 20, 8, 8),
                             child: Text(
@@ -140,24 +152,67 @@ class _AddPostState extends State<AddPost> {
                             ),
                           )
                         : const SizedBox(height: 20),
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        height: height * 0.2,
-                        viewportFraction: 0.5,
-                        scrollDirection: Axis.horizontal, // 슬라이더 스크롤 방향 설정
-                        enableInfiniteScroll: false,
-                      ),
-                      items: _pickedImages.map((file) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: Image.file(file, fit: BoxFit.fitHeight),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
+                    post.image && _pickedImages.isEmpty
+                        ? FutureBuilder(
+                            future: communityService.getImagesURL(
+                                post.id, post.imageNum),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData) {
+                                imagesURL = snapshot.data!;
+
+                                return CarouselSlider(
+                                    options: CarouselOptions(
+                                      height: height * 0.2,
+                                      viewportFraction: 0.5,
+                                      scrollDirection:
+                                          Axis.horizontal, // 슬라이더 스크롤 방향 설정
+                                      enableInfiniteScroll: false,
+                                    ),
+                                    items:
+                                        List.generate(post.imageNum, (index) {
+                                      return Builder(
+                                          builder: (BuildContext context) {
+                                        return SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child:
+                                              Image.network(imagesURL[index]),
+                                        );
+                                      });
+                                    }));
+                              } else {
+                                return Text("Error: ${snapshot.error}");
+                              }
+                            })
+                        : const SizedBox(),
+                    _pickedImages.isNotEmpty
+                        ? CarouselSlider(
+                            options: CarouselOptions(
+                              height: height * 0.2,
+                              viewportFraction: 0.5,
+                              scrollDirection:
+                                  Axis.horizontal, // 슬라이더 스크롤 방향 설정
+                              enableInfiniteScroll: false,
+                            ),
+                            items: _pickedImages.map((file) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child:
+                                        Image.file(file, fit: BoxFit.fitHeight),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),

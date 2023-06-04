@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lol_friend/models/post.dart';
 import 'package:lol_friend/services/community_service.dart';
 import 'package:lol_friend/services/like_service.dart';
+import 'package:lol_friend/views/app.dart';
 import 'package:provider/provider.dart';
 
 class DetailPage extends StatelessWidget {
@@ -16,6 +19,7 @@ class DetailPage extends StatelessWidget {
 
     double height = MediaQuery.of(context).size.height;
     String time = '';
+    List<String> imagesURL = [];
     DateTime current = DateTime.now();
     DateTime writeTime = post.modDate.toDate();
     Duration difference = current.difference(writeTime);
@@ -40,6 +44,46 @@ class DetailPage extends StatelessWidget {
       time = "방금 전";
     }
 
+    Future showBottomNotification(BuildContext context) {
+      return showCupertinoModalPopup(
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+          actions: communityService.isOwnPost(post.uid)
+              ? [
+                  CupertinoActionSheetAction(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/edit", arguments: post);
+                    },
+                    child: const Text("포스트 수정"),
+                  ),
+                  CupertinoActionSheetAction(
+                    onPressed: () {
+                      communityService.deletePost(
+                          post.id, post.image, post.imageNum);
+
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const App()),
+                          (route) => false);
+                    },
+                    child: const Text("포스트 삭제"),
+                  ),
+                ]
+              : [
+                  CupertinoActionSheetAction(
+                    onPressed: () {},
+                    child: const Text("업데이트 예정"),
+                  ),
+                ],
+          cancelButton: CupertinoActionSheetAction(
+            child: const Text("취소"),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+      );
+    }
+
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -50,6 +94,13 @@ class DetailPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("LOL POST"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showBottomNotification(context);
+                },
+                icon: const Icon(CupertinoIcons.ellipsis_vertical)),
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -81,7 +132,7 @@ class DetailPage extends StatelessWidget {
                           } else if (snapshot.connectionState ==
                                   ConnectionState.done &&
                               snapshot.hasData) {
-                            List<String> imagesURL = snapshot.data!;
+                            imagesURL = snapshot.data!;
                             List<Widget> images = [];
                             for (int i = 0; i < post.imageNum; i++) {
                               images.add(

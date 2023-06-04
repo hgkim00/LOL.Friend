@@ -5,6 +5,7 @@ import 'package:lol_friend/models/post.dart';
 import 'package:lol_friend/services/navigation_service.dart';
 import 'package:lol_friend/views/community/add_post.dart';
 import 'package:lol_friend/views/community/detail.dart';
+import 'package:lol_friend/views/community/edit_post.dart';
 import 'package:lol_friend/views/login.dart';
 import 'package:lol_friend/views/home/search.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,11 @@ class App extends StatelessWidget {
           final Post post = settings.arguments as Post;
           return MaterialPageRoute(
               builder: (context) => DetailPage(post: post));
+        }
+        if (settings.name == '/edit') {
+          final Post post = settings.arguments as Post;
+          return MaterialPageRoute(
+              builder: (context) => EditPost(existPost: post));
         }
         return null;
       },

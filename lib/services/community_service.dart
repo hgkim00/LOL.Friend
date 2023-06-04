@@ -58,15 +58,21 @@ class CommunityService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void editPost(String docId, String title, String content, List<File> file) {
-    if (file.isNotEmpty) {
+  Future<void> editPost(String docId, String title, String content,
+      List<File> images, int currImgNum) async {
+    if (images.isNotEmpty) {
       _firestore.collection('post').doc(docId).update({
         'title': title,
         'content': content,
         'image': true,
+        'imageNum': images.length,
         'modDate': FieldValue.serverTimestamp(),
       });
-      uploadImage(file, docId);
+      for (int i = 0; i < currImgNum; i++) {
+        final imageRef = _storage.ref().child("images/$docId$i");
+        await imageRef.delete();
+      }
+      uploadImage(images, docId);
     } else {
       _firestore.collection('product').doc(docId).update({
         'title': title,
@@ -75,6 +81,24 @@ class CommunityService extends ChangeNotifier {
       });
     }
     notifyListeners();
+  }
+
+  Future<void> deletePost(String docId, bool image, int imageNum) async {
+    _firestore.collection('post').doc(docId).delete();
+    if (image) {
+      for (int i = 0; i < imageNum; i++) {
+        final imageRef = _storage.ref().child("images/$docId$i");
+        await imageRef.delete();
+      }
+    }
+    notifyListeners();
+  }
+
+  bool isOwnPost(String postUID) {
+    if (_auth.currentUser!.uid == postUID) {
+      return true;
+    }
+    return false;
   }
 
   Future<String> getThumbnailURL(String postId) async {
