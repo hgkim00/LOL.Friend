@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +8,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color outlineColor = Theme.of(context).colorScheme.outline;
-    String? riotApi = dotenv.env['RIOT_API'];
 
     return Container(
       decoration: const BoxDecoration(

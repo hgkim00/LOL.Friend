@@ -27,9 +27,9 @@ class BottomNavigation extends StatelessWidget {
           label: 'Community',
         ),
         NavigationDestination(
-          selectedIcon: Icon(CupertinoIcons.chat_bubble_fill),
-          icon: Icon(CupertinoIcons.chat_bubble),
-          label: 'Chat',
+          selectedIcon: Icon(CupertinoIcons.map_fill),
+          icon: Icon(CupertinoIcons.map),
+          label: 'Maps',
         ),
         NavigationDestination(
           selectedIcon: Icon(CupertinoIcons.chart_bar_fill),

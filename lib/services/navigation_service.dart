@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lol_friend/views/chat.dart';
+import 'package:lol_friend/views/map/maps.dart';
 import 'package:lol_friend/views/community/community.dart';
 import 'package:lol_friend/views/home/home.dart';
 import 'package:lol_friend/views/rank.dart';
@@ -22,7 +22,7 @@ class NavigationService extends ChangeNotifier {
       case 1:
         return const CommunityPage();
       case 2:
-        return const ChatPage();
+        return MapsPage();
       case 3:
         return const RankPage();
       case 4:
