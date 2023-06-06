@@ -3,7 +3,7 @@ import 'package:lol_friend/views/map/maps.dart';
 import 'package:lol_friend/views/community/community.dart';
 import 'package:lol_friend/views/home/home.dart';
 import 'package:lol_friend/views/rank.dart';
-import 'package:lol_friend/views/setting.dart';
+import 'package:lol_friend/views/setting/setting.dart';
 
 class NavigationService extends ChangeNotifier {
   int _selectedIndex = 0;
@@ -22,7 +22,7 @@ class NavigationService extends ChangeNotifier {
       case 1:
         return const CommunityPage();
       case 2:
-        return MapsPage();
+        return const MapsPage();
       case 3:
         return const RankPage();
       case 4:

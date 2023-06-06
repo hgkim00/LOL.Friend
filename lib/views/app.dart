@@ -8,6 +8,7 @@ import 'package:lol_friend/views/community/detail.dart';
 import 'package:lol_friend/views/community/edit_post.dart';
 import 'package:lol_friend/views/login.dart';
 import 'package:lol_friend/views/home/search.dart';
+import 'package:lol_friend/views/setting/report_bug.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -67,4 +68,5 @@ class App extends StatelessWidget {
 
 final _routes = <String, WidgetBuilder>{
   '/addpost': ((BuildContext context) => const AddPost()),
+  '/report': ((BuildContext context) => const ReportBug()),
 };

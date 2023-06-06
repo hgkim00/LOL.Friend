@@ -122,6 +122,7 @@ class _HomePageState extends State<HomePage> {
                                         child: Image.network(
                                       'https://ddragon.leagueoflegends.com/cdn/13.11.1/img/profileicon/${riotService.lolUser.profileIconId}.png',
                                     )),
+                                    const SizedBox(width: 20),
                                     Expanded(
                                       child: Column(
                                         mainAxisAlignment:
@@ -144,6 +145,7 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                       ),
                                     ),
+                                    const SizedBox(width: 20),
                                   ],
                                 )
                               : const Center(
