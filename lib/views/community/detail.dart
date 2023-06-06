@@ -192,6 +192,13 @@ class DetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 const Divider(height: 10),
+                // TODO: 댓글 기능 업데이트
+                Container(
+                  height: height * 0.2,
+                  width: MediaQuery.of(context).size.width,
+                  color: const Color(0xFF1B2023),
+                  child: const Center(child: Text("To Be Continued..")),
+                )
               ],
             ),
           ),

@@ -21,6 +21,7 @@ class RiotService extends ChangeNotifier {
       wins: -1,
       losses: -1);
   String? riotApi = dotenv.env['RIOT_API'];
+  List<String> mostChamps = [];
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
@@ -89,5 +90,32 @@ class RiotService extends ChangeNotifier {
       lolUser.wins = summonerLeague[0]['wins'];
       lolUser.losses = summonerLeague[0]['losses'];
     }
+  }
+
+  Future<void> getMostChamp() async {
+    mostChamps = [];
+
+    String dataUrl =
+        "https://kr.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${lolUser.id}?api_key=$riotApi";
+    http.Response response = await http.get(Uri.parse(dataUrl));
+    List<dynamic> data = jsonDecode(response.body);
+    List<int> mostChampId = [];
+    for (int i = 0; i < 3; i++) {
+      mostChampId.add(data[i]['championId']);
+    }
+
+    String champUrl =
+        "http://ddragon.leagueoflegends.com/cdn/13.11.1/data/ko_KR/champion.json";
+    http.Response champResponse = await http.get(Uri.parse(champUrl));
+    Map<String, dynamic> champData = jsonDecode(champResponse.body);
+    Map<String, dynamic> cdata = champData['data'];
+
+    cdata.forEach((key, value) {
+      for (int i = 0; i < 3; i++) {
+        if (cdata[key]['key'] == mostChampId[i].toString()) {
+          mostChamps.add(cdata[key]['id']);
+        }
+      }
+    });
   }
 }

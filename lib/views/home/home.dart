@@ -161,6 +161,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 const SizedBox(height: 30),
+                // TODO: 친구 목록 업데이트
                 Container(
                   height: height * 0.25,
                   width: width,
