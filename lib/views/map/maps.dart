@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:lol_friend/services/location_provider.dart';
+import 'package:lol_friend/services/location_service.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 

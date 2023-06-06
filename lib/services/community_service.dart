@@ -24,7 +24,6 @@ class CommunityService extends ChangeNotifier {
         return Post.fromSnapShot(document);
       }).toList();
     });
-    // notifyListeners();
   }
 
   void addPost(String title, String content, List<File> images) {
