@@ -3,6 +3,7 @@ import 'package:lol_friend/services/riot_service.dart';
 import 'package:lol_friend/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class RankPage extends StatelessWidget {
   const RankPage({super.key});
@@ -11,10 +12,12 @@ class RankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final riotService = Provider.of<RiotService>(context);
     double height = MediaQuery.of(context).size.height;
+
     const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
     String winRates = (riotService.lolUser.wins /
             (riotService.lolUser.wins + riotService.lolUser.losses))
         .toStringAsFixed(3);
+    String winPercent = (double.parse(winRates) * 100).toStringAsFixed(1);
 
     List<PieChartSectionData> showingSections = [
       PieChartSectionData(
@@ -71,7 +74,7 @@ class RankPage extends StatelessWidget {
                       return const Center(child: CircularProgressIndicator());
                     }
                     if (snapshot.connectionState == ConnectionState.done) {
-                      print(riotService.mostChamps[0]);
+                      // print(riotService.mostChamps[0]);
                       return Row(
                         children: [
                           for (int i = 0; i < 3; i++)
@@ -114,10 +117,33 @@ class RankPage extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                        child: Text(
-                      'Total Win Rates: $winRates',
-                      style: const TextStyle(fontSize: 16),
-                    )),
+                      child: CircularPercentIndicator(
+                        radius: 60.0,
+                        lineWidth: 13.0,
+                        animation: true,
+                        percent: double.parse(winRates),
+                        center: Text(
+                          "$winPercent%",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20.0),
+                        ),
+                        footer: const Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text(
+                            "Total Win Percent",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17.0),
+                          ),
+                        ),
+                        circularStrokeCap: CircularStrokeCap.round,
+                        progressColor: const Color.fromARGB(255, 236, 188, 46),
+                      ),
+
+                      //   Text(
+                      // 'Total Win Rates: $winRates',
+                      // style: const TextStyle(fontSize: 16),
+                      // ),
+                    ),
                   ],
                 ),
               ),
