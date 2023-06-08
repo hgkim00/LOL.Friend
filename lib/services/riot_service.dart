@@ -22,6 +22,7 @@ class RiotService extends ChangeNotifier {
       losses: -1);
   String? riotApi = dotenv.env['RIOT_API'];
   List<String> mostChamps = [];
+  List<String> rotationChamps = [];
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
@@ -114,6 +115,32 @@ class RiotService extends ChangeNotifier {
       for (int i = 0; i < 3; i++) {
         if (cdata[key]['key'] == mostChampId[i].toString()) {
           mostChamps.add(cdata[key]['id']);
+        }
+      }
+    });
+  }
+
+  Future<void> getRotationChamp() async {
+    rotationChamps = [];
+    String url =
+        "https://kr.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=$riotApi";
+    http.Response response = await http.get(Uri.parse(url));
+    Map<String, dynamic> data = jsonDecode(response.body);
+    List<dynamic> rotation = data['freeChampionIds'];
+    List<int> rotationChampId = [];
+    for (int i = 0; i < rotation.length; i++) {
+      rotationChampId.add(data['freeChampionIds'][i]);
+    }
+
+    String champUrl =
+        "http://ddragon.leagueoflegends.com/cdn/13.11.1/data/ko_KR/champion.json";
+    http.Response champResponse = await http.get(Uri.parse(champUrl));
+    Map<String, dynamic> champData = jsonDecode(champResponse.body);
+    Map<String, dynamic> champions = champData['data'];
+    champions.forEach((key, value) {
+      for (int i = 0; i < rotation.length; i++) {
+        if (champions[key]['key'] == rotationChampId[i].toString()) {
+          rotationChamps.add(champions[key]['id']);
         }
       }
     });

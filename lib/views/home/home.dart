@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pushNamed(context, '/search', arguments: value);
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Row(
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const Text(
                         'My Information',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 18),
                       ),
                       IconButton(
                         onPressed: () {
@@ -162,13 +162,42 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                 ),
-                const SizedBox(height: 30),
-                // TODO: 친구 목록 업데이트
-                Container(
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text('Weekly Rotation Champions',
+                      style: TextStyle(fontSize: 18)),
+                ),
+                SizedBox(
                   height: height * 0.25,
-                  width: width,
-                  color: const Color(0xFF1B2023),
-                  child: const Center(child: Text("To Be Continued..")),
+                  child: FutureBuilder(
+                      future: riotService.getRotationChamp(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              for (int i = 0;
+                                  i < riotService.rotationChamps.length;
+                                  i++)
+                                Column(
+                                  children: [
+                                    Image.network(
+                                      'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${riotService.rotationChamps[i]}_0.jpg',
+                                      height: height * 0.225,
+                                    ),
+                                    Text(riotService.rotationChamps[i]),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        );
+                      }),
                 ),
               ],
             ),
