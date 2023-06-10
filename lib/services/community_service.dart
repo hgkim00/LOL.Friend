@@ -10,7 +10,6 @@ class CommunityService extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   final _storage = FirebaseStorage.instance;
-  String nickName = '';
 
   List<Post> posts = [];
 
@@ -26,9 +25,11 @@ class CommunityService extends ChangeNotifier {
     });
   }
 
-  void addPost(String title, String content, List<File> images) {
+  Future<void> addPost(String title, String content, List<File> images) async {
     final docID = _firestore.collection('post').doc().id;
-    _firestore
+    String nickName = '';
+
+    await _firestore
         .collection('user')
         .doc(_auth.currentUser!.uid)
         .get()
@@ -117,12 +118,13 @@ class CommunityService extends ChangeNotifier {
     return urlList;
   }
 
-  void uploadImage(List<File> images, String docID) {
+  Future<void> uploadImage(List<File> images, String docID) async {
     int num = 0;
     for (var image in images) {
-      _storage.ref("images/$docID$num").putFile(image);
+      await _storage.ref("images/$docID$num").putFile(image);
       num += 1;
     }
+    await Future.delayed(const Duration(milliseconds: 500));
     print("Upload Success!");
   }
 }

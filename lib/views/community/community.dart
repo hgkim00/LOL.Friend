@@ -49,7 +49,7 @@ class _CommunityPageState extends State<CommunityPage> {
                       itemCount: communityService.posts.length,
                       itemBuilder: (context, index) {
                         DateTime post =
-                            communityService.posts[index].modDate.toDate();
+                            communityService.posts[index].regDate.toDate();
 
                         Duration difference = current.difference(post);
 
@@ -88,7 +88,10 @@ class _CommunityPageState extends State<CommunityPage> {
                                 Navigator.pushNamed(context, '/detail',
                                     arguments: communityService.posts[index]);
                               },
-                              title: Text(communityService.posts[index].title),
+                              title: Text(
+                                communityService.posts[index].title,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                               subtitle: Text("$time  |  $user"),
                               trailing: LayoutBuilder(
                                   builder: (context, constraints) {

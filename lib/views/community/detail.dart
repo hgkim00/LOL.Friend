@@ -21,7 +21,7 @@ class DetailPage extends StatelessWidget {
     String time = '';
     List<String> imagesURL = [];
     DateTime current = DateTime.now();
-    DateTime writeTime = post.modDate.toDate();
+    DateTime writeTime = post.regDate.toDate();
     Duration difference = current.difference(writeTime);
 
     int years = difference.inDays ~/ 365;

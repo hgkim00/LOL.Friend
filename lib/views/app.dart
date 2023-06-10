@@ -19,6 +19,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'LOL.Friend',
       routes: _routes,
+      debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) {
         if (settings.name == '/search') {
           final String? data = settings.arguments as String?;
