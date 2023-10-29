@@ -47,6 +47,7 @@ class SearchSummonerPage extends StatelessWidget {
                   height: 30,
                   fit: BoxFit.fitHeight,
                 ),
+                centerTitle: true,
               ),
               body: WebViewWidget(controller: controller),
             )));

@@ -22,6 +22,7 @@ class MapsPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('LOL FIND PC ROOM'),
+          centerTitle: true,
         ),
         body: locationProvider.currentPosition != null
             ? GoogleMap(

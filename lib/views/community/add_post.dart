@@ -53,6 +53,7 @@ class _AddPostState extends State<AddPost> {
             'LOLPOST',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          centerTitle: true,
           actions: [
             TextButton(
               onPressed: () {

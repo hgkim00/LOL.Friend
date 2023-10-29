@@ -65,6 +65,7 @@ class _EditPostState extends State<EditPost> {
             'LOLPOST',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          centerTitle: true,
           actions: [
             TextButton(
               onPressed: () async {

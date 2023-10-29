@@ -94,6 +94,7 @@ class DetailPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("LOL POST"),
+          centerTitle: true,
           actions: [
             IconButton(
                 onPressed: () {

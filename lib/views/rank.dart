@@ -54,6 +54,7 @@ class RankPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("LOL STATUS"),
+          centerTitle: true,
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),

@@ -39,10 +39,11 @@ class _HomePageState extends State<HomePage> {
               height: 40,
               fit: BoxFit.fitHeight,
             ),
+            centerTitle: true,
           ),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -171,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(fontSize: 18)),
                   ),
                   SizedBox(
-                    height: height * 0.25,
+                    height: height * 0.3,
                     child: FutureBuilder(
                         future: riotService.getRotationChamp(),
                         builder: (context, snapshot) {

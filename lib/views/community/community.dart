@@ -27,6 +27,7 @@ class _CommunityPageState extends State<CommunityPage> {
         appBar: AppBar(
           // backgroundColor: const Color(0xFF020F1C),
           title: const Text('LOL COMMUNITY'),
+          centerTitle: true,
         ),
         body: RefreshIndicator(
           onRefresh: () async {

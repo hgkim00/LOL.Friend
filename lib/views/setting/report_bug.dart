@@ -84,9 +84,9 @@ class ReportBug extends StatelessWidget {
                     onPressed: () {
                       settingService.sendEmail(context);
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           "이메일 보내기",
                           style: TextStyle(fontWeight: FontWeight.bold),
